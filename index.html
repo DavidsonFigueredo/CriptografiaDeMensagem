@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criptografia de Mensagem</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 100vh;
+      background: radial-gradient(circle, rgba(52,152,219,1) 0%, rgba(46,204,113,1) 100%);
+      margin: 0;
+      opacity: 50; /* Ajuste a opacidade conforme necessário */
+      position: relative;
+    }
+
+    h1 {
+      color: #fff;
+      margin-bottom: 20px;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    #container {
+      background-color: transparent;
+      padding: 70px;
+      border-radius: 8px;
+      text-align: center;
+      max-width: 1000px;
+      width: 140%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      height: auto;
+    }
+
+    input, textarea {
+      width: 70%;
+      height: 20%;
+      margin-bottom: 30px; /* Reduzi a margem inferior para dar espaço ao texto informativo */
+      padding: 10px;
+      box-sizing: border-box;
+      border-radius: 6px;
+      font-size: 20px;
+    }
+
+    p {
+      color: white;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      width: calc(70% - 5px);
+      margin: 5px;
+      padding: 10px;
+      cursor: pointer;
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+      border-radius: 5px;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    button:hover {
+      background-color: #3498db;
+    }
+
+    #result {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      text-align: center;
+      margin-bottom: 5px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 20px;
+    }
+
+    /* Adicionando estilos ao rodapé */
+    footer {
+      
+      font-size: 1,5rem;
+      background-color: transparent;
+      color: #fff;
+      padding: 2px;
+      text-align: center;
+      animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Adicionando estilos à imagem neon */
+    img {
+        background-color: transparent;
+      width: 20%; /* Reduzindo o tamanho da imagem em 50% */
+      padding: 5px;
+      justify-content: center;
+      border-radius: 50px;
+      height: 25%;
+      filter: brightness(150%) contrast(200%) drop-shadow(0 0 10px rgba(19, 197, 241, 0.8));
+      animation: neonGlow 3s infinite alternate;
+    }
+
+    @keyframes neonGlow {
+      from {
+        filter: brightness(150%) contrast(200%) drop-shadow(0 0 10px rgba(4, 226, 255, 0.8));
+      }
+      to {
+        filter: brightness(120%) contrast(250%) drop-shadow(0 0 15px rgb(7, 219, 219));
+      }
+    }
+  </style>
+</head>
+<body>
+  <img src="a10.png" alt="Logo Alura">
+  <h1>Criptografia de Mensagem</h1>
+
+  <div id="container">
+    <label for="inputText">Digite seu texto:</label>
+    <input type="text" id="inputText">
+    <p>Somente letras minúsculas e sem acento!</p>
+
+    <label for="encryptedText">Texto criptografado:</label>
+    <textarea id="encryptedText" readonly></textarea>
+
+    <button onclick="encryptText()">Criptografar</button>
+    <button onclick="decryptText()">Descriptografar</button>
+    <button onclick="copyResult()">Copiar</button>
+  </div>
+
+  <footer>
+    &copy; Desenvolvido por Davidson Araújo
+  </footer>
+
+  <script>
+    function encryptText() {
+      const inputText = document.getElementById('inputText').value.toLowerCase();
+      const result = encrypt(inputText);
+      document.getElementById('encryptedText').value = result;
+    }
+
+    function decryptText() {
+      const inputText = document.getElementById('inputText').value.toLowerCase();
+      const result = decrypt(inputText);
+      document.getElementById('encryptedText').value = result;
+    }
+
+    function copyResult() {
+      const resultElement = document.getElementById('encryptedText');
+      const resultText = resultElement.value;
+
+      // Se a caixa de texto criptografada estiver vazia, copia o texto original
+      const textToCopy = resultText || document.getElementById('inputText').value;
+
+      // Cria um elemento de texto temporário e o seleciona
+      const tempElement = document.createElement('textarea');
+      tempElement.value = textToCopy;
+      document.body.appendChild(tempElement);
+      tempElement.select();
+      
+      // Copia o texto para a área de transferência
+      document.execCommand('copy');
+      
+      // Remove o elemento temporário
+      document.body.removeChild(tempElement);
+      
+      alert('Texto copiado para a área de transferência!');
+    }
+
+    function encrypt(text) {
+      return text.replace(/e/g, 'enter')
+                 .replace(/i/g, 'imes')
+                 .replace(/a/g, 'ai')
+                 .replace(/o/g, 'ober')
+                 .replace(/u/g, 'ufat');
+    }
+
+    function decrypt(text) {
+      return text.replace(/enter/g, 'e')
+                 .replace(/imes/g, 'i')
+                 .replace(/ai/g, 'a')
+                 .replace(/ober/g, 'o')
+                 .replace(/ufat/g, 'u');
+    }
+  </script>
+</body>
+</html>
